@@ -1,49 +1,46 @@
-let width = 800, height = 600;
+let width = 800 - 6, height = 600 - 6;
 
 function setup() {
   CreateBoard(width, height)
 }
 
-let posX = width/2, posY = height/2;
-let foodPosX = Math.round((Math.floor(Math.random() * Math.floor(width - 25))) / 25) * 25;
-let foodPosY = Math.round((Math.floor(Math.random() * Math.floor(height - 25))) / 25) * 25;
-let food = new Food(foodPosX + 4, foodPosY + 4);
+let score = 0;
 
-let snake = new Snake(200, height / 2, 1, 20);
+let posX = width/2, posY = height/2;
+let food = new Food();
+
+let snake = new Snake(206, (height + 6) / 2, 1, 10);
 
 let paused = false;
+let isGameOver = false;
+
 
 function draw() {
-	background(55, 55, 55);
+	if (!paused) {
+		background(55, 55, 55);
+	}
 	frameRate(60);
 	
-	snake.drawBody();
-	snake.drawHead();
-	
-	// snake.addBodyPart();
-	
-	if (!paused) {
-		snake.updatePos();	
-		snake.foodCollide(foodPosX, foodPosY);
+	if (!isGameOver) {
+		snake.drawBody();
+		
+		food.draw();
+		
+		snake.drawHead();
+		
+		if (!paused) {
+			snake.Collide(food);
+			snake.updatePos();	
+		}else {
+			textSize(128);
+			fill("white");
+			stroke(0);
+			text("Paused", width / 4, height / 1.8);
+		}
 	}else {
-		textSize(128);
-		fill("white");
-		text("Paused", width / 4, height / 1.8);
+		gameOver();
 	}
 	
-	/*for (var i = 0; i < width; i+=25) {
-		strokeWeight(4);
-		stroke('rgb(200, 200, 200)');
-		line(i, 0, i, height);
-	}
-	
-	for (var i = 0; i < height; i+=25) {
-		strokeWeight(4);
-		stroke('rgb(200, 200, 200)');
-		line(0, i, width, i);
-	}*/
-	
-	food.draw();
 }
 
 function keyPressed() {
