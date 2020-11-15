@@ -1,7 +1,13 @@
 body {
 	background-color: #202020;
+	font-family: Arial;
+	color: #cdcdcd;
 }
 h1 {
-	color: white;
-	font-family: Arial;
 }
+
+h2 {
+	text-align: middle-top;
+	font-size: 64px;
+}
+
